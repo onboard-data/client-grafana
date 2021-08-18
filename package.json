@@ -9,8 +9,8 @@
     "watch": "grafana-toolkit plugin:dev --watch",
     "sign": "grafana-toolkit plugin:sign",
     "start": "yarn watch",
-    "prettier": "./node_modules/.bin/prettier --write \"src/**/*.{js,jsx,css,json,md}\"",
-    "prettier-check": "./node_modules/.bin/prettier --check \"src/**/*.{js,jsx,css,json,md}\"",
+    "prettier": "./node_modules/.bin/prettier --write \"src/**/*.{js,jsx,ts,tsx,css,json,md}\"",
+    "prettier-check": "./node_modules/.bin/prettier --check \"src/**/*.{js,jsx,ts,tsx,css,json,md}\"",
     "prettier-dev": "./node_modules/.bin/pretty-quick --branch dev"
   },
   "author": "Nathan Merritt",
