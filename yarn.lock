@@ -1059,6 +1059,18 @@
     prettier "2.2.1"
     typescript "4.3.4"
 
+"@grafana/runtime@latest":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@grafana/runtime/-/runtime-8.1.1.tgz#6eda4c896da03e43b0dd4097ac622f14996fd2ad"
+  integrity sha512-BYBR92QGIkty8hKX0j0nrvEFuGMaW73dVvImvkffzNtBUTZAwAOQF7kn2smqZEzp+hELWkI2n1nSTEtl7TcLQQ==
+  dependencies:
+    "@grafana/data" "8.1.1"
+    "@grafana/e2e-selectors" "8.1.1"
+    "@grafana/ui" "8.1.1"
+    history "4.10.1"
+    systemjs "0.20.19"
+    systemjs-plugin-css "0.1.37"
+
 "@grafana/slate-react@0.22.10-grafana":
   version "0.22.10-grafana"
   resolved "https://registry.npmjs.org/@grafana/slate-react/-/slate-react-0.22.10-grafana.tgz"
@@ -6175,7 +6187,7 @@ highlight-words-core@^1.2.0:
   resolved "https://registry.npmjs.org/highlight-words-core/-/highlight-words-core-1.2.2.tgz"
   integrity sha512-BXUKIkUuh6cmmxzi5OIbUJxrG8OAk2MqoL1DtO3Wo9D2faJg2ph5ntyuQeLqaHJmzER6H5tllCDA9ZnNe9BVGg==
 
-history@^4.9.0:
+history@4.10.1, history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.npmjs.org/history/-/history-4.10.1.tgz"
   integrity sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew==
@@ -11742,6 +11754,16 @@ symbol-tree@^3.2.2, symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
+
+systemjs-plugin-css@0.1.37:
+  version "0.1.37"
+  resolved "https://registry.yarnpkg.com/systemjs-plugin-css/-/systemjs-plugin-css-0.1.37.tgz#684847252ca69b7da24a1201094c86274324e82f"
+  integrity sha512-wCGG62zYXuOlNji5FlBjeMFAnLeAO/HQmFg+8UBX/mlHoAKLHlGFYRstlhGKibRU2oxk/BH9DaihOuhhNLi7Kg==
+
+systemjs@0.20.19:
+  version "0.20.19"
+  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-0.20.19.tgz#c2b9e79c19f4bea53a19b1ed3f974ffb463be949"
+  integrity sha512-H/rKwNEEyej/+IhkmFNmKFyJul8tbH/muiPq5TyNoVTwsGhUjRsN3NlFnFQUvFXA3+GQmsXkCNXU6QKPl779aw==
 
 table@^6.0.4:
   version "6.7.1"

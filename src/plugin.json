@@ -32,5 +32,17 @@
   "dependencies": {
     "grafanaDependency": ">=7.0.0",
     "plugins": []
-  }
+  },
+  "routes": [
+    {
+      "path": "portal",
+      "url": "https://api.onboarddata.io",
+      "headers": [
+        {
+          "name": "X-OB-Api",
+          "content": "{{ .SecureJsonData.apiKey }}"
+        }
+      ]
+    }
+  ]
 }

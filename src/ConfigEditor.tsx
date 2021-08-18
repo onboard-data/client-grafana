@@ -53,6 +53,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     return (
       <div className="gf-form-group">
         <div className="gf-form">
+          {/* unused, TODO remove this field */}
           <FormField
             label="Path"
             labelWidth={6}
@@ -69,7 +70,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
               isConfigured={(secureJsonFields && secureJsonFields.apiKey) as boolean}
               value={secureJsonData.apiKey || ''}
               label="API Key"
-              placeholder="secure json field (backend only)"
+              placeholder="ob-p-"
               labelWidth={6}
               inputWidth={20}
               onReset={this.onResetAPIKey}

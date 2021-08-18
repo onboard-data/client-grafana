@@ -8,12 +8,18 @@ import {
   MutableDataFrame,
   FieldType,
 } from '@grafana/data';
+import { getBackendSrv } from '@grafana/runtime';
 
 import { MyQuery, MyDataSourceOptions, defaultQuery } from './types';
 
+const REQUIRED_SCOPES = ['general', 'buildings:read'];
+
 export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
+  url?: string;
+
   constructor(instanceSettings: DataSourceInstanceSettings<MyDataSourceOptions>) {
     super(instanceSettings);
+    this.url = instanceSettings.url;
   }
 
   async query(options: DataQueryRequest<MyQuery>): Promise<DataQueryResponse> {
@@ -36,11 +42,23 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     return { data };
   }
 
-  async testDatasource() {
+  async testDatasource(): Promise<any> {
     // Implement a health check for your data source.
+    const whoami = await getBackendSrv().datasourceRequest({
+      method: 'GET',
+      url: `${this.url}/portal/whoami`,
+    });
+    const scopes = whoami.data?.apiKeyScopes ?? [];
+    const missing = REQUIRED_SCOPES.filter((s) => scopes.indexOf(s) === -1);
+    if (missing.length > 0) {
+      return {
+        status: 'error',
+        message: `Provided API Key is missing required scopes: ${missing.join(', ')}`,
+      };
+    }
     return {
       status: 'success',
-      message: 'Success',
+      message: `Connected to Onboard Portal`,
     };
   }
 }

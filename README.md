@@ -10,29 +10,18 @@ Grafana supports a wide range of data sources, including Prometheus, MySQL, and 
 
 ## Getting started
 
-1. Install dependencies
+```bash
+yarn install
+yarn dev # Build plugin in development mode or run in watch mode
+# or
+yarn watch
 
-   ```bash
-   yarn install
-   ```
+# and run grafana in a docker container
+docker run -d -p 3001:3000 -v "$(pwd)":/var/lib/grafana/plugins --name=grafana grafana/grafana:7.0.0
 
-2. Build plugin in development mode or run in watch mode
-
-   ```bash
-   yarn dev
-   ```
-
-   or
-
-   ```bash
-   yarn watch
-   ```
-
-3. Build plugin in production mode
-
-   ```bash
-   yarn build
-   ```
+# web UI will start on port 3001
+# credentials for first login are admin/admin
+```
 
 ## Learn more
 
