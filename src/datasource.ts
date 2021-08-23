@@ -14,6 +14,11 @@ import { MyQuery, MyDataSourceOptions, defaultQuery } from './types';
 
 const REQUIRED_SCOPES = ['general', 'buildings:read'];
 
+const missingScopes = (missing: string[]) => ({
+  status: 'error',
+  message: `Provided API Key is missing required scopes: ${missing.join(', ')}`,
+});
+
 export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
   url?: string;
 
@@ -42,19 +47,36 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     return { data };
   }
 
+  /**
+   * A health check that verifies an onboard API key and its granted scopes
+   */
   async testDatasource(): Promise<any> {
-    // Implement a health check for your data source.
-    const whoami = await getBackendSrv().datasourceRequest({
-      method: 'GET',
-      url: `${this.url}/portal/whoami`,
-    });
+    let whoami;
+    try {
+      whoami = await getBackendSrv().datasourceRequest({
+        method: 'GET',
+        url: `${this.url}/portal/whoami`,
+      });
+    } catch (res) {
+      const { status, statusText } = res;
+      if (status === 401) {
+        return {
+          status: 'error',
+          message: 'Sorry, your provided API Key is invalid',
+        };
+      }
+      if (status === 403) {
+        return missingScopes(REQUIRED_SCOPES);
+      }
+      return {
+        status: 'error',
+        message: `Something went wrong - please check your API Key and try again (${statusText})`,
+      };
+    }
     const scopes = whoami.data?.apiKeyScopes ?? [];
     const missing = REQUIRED_SCOPES.filter((s) => scopes.indexOf(s) === -1);
     if (missing.length > 0) {
-      return {
-        status: 'error',
-        message: `Provided API Key is missing required scopes: ${missing.join(', ')}`,
-      };
+      return missingScopes(missing);
     }
     return {
       status: 'success',

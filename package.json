@@ -13,7 +13,7 @@
     "prettier-check": "./node_modules/.bin/prettier --check \"src/**/*.{js,jsx,ts,tsx,css,json,md}\"",
     "prettier-dev": "./node_modules/.bin/pretty-quick --branch dev"
   },
-  "author": "Nathan Merritt",
+  "author": "Onboard Data",
   "license": "Apache-2.0",
   "devDependencies": {
     "@grafana/data": "latest",
