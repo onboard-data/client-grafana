@@ -1,12 +1,23 @@
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
 
-export interface MyQuery extends DataQuery {
-  queryText?: string;
-  constant: number;
+type NameOrId = string | number;
+
+export interface PointSelector extends DataQuery {
+  buildings: NameOrId[];
+
+  point_ids: number[];
+  point_topics: string[];
+
+  point_types: NameOrId[];
+  equipment_types: NameOrId[];
 }
 
-export const defaultQuery: Partial<MyQuery> = {
-  constant: 6.5,
+export const defaultQuery: Partial<PointSelector> = {
+  buildings: [],
+  point_ids: [],
+  point_topics: [],
+  point_types: [],
+  equipment_types: [],
 };
 
 /**
@@ -19,4 +30,12 @@ export interface MyDataSourceOptions extends DataSourceJsonData {}
  */
 export interface MySecureJsonData {
   apiKey?: string;
+}
+
+export interface PointData {
+  point_id: number;
+  columns: string[];
+  unit: string;
+  values: NameOrId[][];
+  display?: string;
 }
