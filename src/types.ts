@@ -34,6 +34,7 @@ export interface MySecureJsonData {
 
 export interface PointData {
   point_id: number;
+  topic: string;
   columns: string[];
   unit: string;
   values: NameOrId[][];

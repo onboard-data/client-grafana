@@ -1,5 +1,4 @@
 import defaults from 'lodash/defaults';
-
 import {
   DataQueryRequest,
   DataQueryResponse,
@@ -47,10 +46,10 @@ export class DataSource extends DataSourceApi<PointSelector, MyDataSourceOptions
         refId: query.refId,
         fields: [{ name: 'time', type: FieldType.time }],
       });
-      timeseries.data.forEach(({ point_id, columns, unit, values, display }: PointData) => {
+      timeseries.data.forEach(({ point_id, columns, unit, values, topic }: PointData) => {
         const timeCol = columns.indexOf('time');
         const unitCol = columns.indexOf(unit);
-        const displayName = display || `${point_id}`;
+        const displayName = topic || `${point_id}`;
         df.addField({
           name: `${point_id}`,
           type: FieldType.number,
@@ -101,8 +100,7 @@ export class DataSource extends DataSourceApi<PointSelector, MyDataSourceOptions
     }
     const scopes = whoami.data?.apiKeyScopes ?? [];
     const missing = REQUIRED_SCOPES.filter((s) => scopes.indexOf(s) === -1);
-    // TODO: re-enable this check after scopes field goes live to prod
-    if (false || missing.length > 0) {
+    if (missing.length > 0) {
       return missingScopes(missing);
     }
     return {
