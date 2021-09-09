@@ -1,28 +1,32 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "datasource",
-  "name": "onboard-datasource",
+  "name": "Onboard Data Connector",
   "id": "io-onboarddata-onboard-datasource",
   "metrics": true,
   "info": {
     "description": "",
     "author": {
-      "name": "Nathan Merritt",
+      "name": "Onboard Data",
       "url": "https://onboarddata.io"
     },
-    "keywords": [],
+    "keywords": ["bacnet", "modbus", "bas"],
     "logos": {
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
     "links": [
       {
-        "name": "Website",
-        "url": "https://github.com/grafana/grafana-starter-datasource"
+        "name": "Onboard Website",
+        "url": "https://onboarddata.io"
+      },
+      {
+        "name": "Repository",
+        "url": "https://github.com/onboard-data/client-grafana"
       },
       {
         "name": "License",
-        "url": "https://github.com/grafana/grafana-starter-datasource/blob/master/LICENSE"
+        "url": "https://github.com/onboard-data/client-grafana/blob/dev/LICENSE"
       }
     ],
     "screenshots": [],
