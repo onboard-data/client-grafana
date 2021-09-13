@@ -1,20 +1,15 @@
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
-
-type NameOrId = string | number;
+import { SelectableValue } from '@grafana/data';
 
 export interface PointSelector extends DataQuery {
-  buildings: NameOrId[];
-
-  point_ids: number[];
+  buildings: Array<SelectableValue<number>>;
+  point_types: Array<SelectableValue<number>>;
+  equipment_types: Array<SelectableValue<number>>;
   point_topics: string[];
-
-  point_types: NameOrId[];
-  equipment_types: NameOrId[];
 }
 
 export const defaultQuery: Partial<PointSelector> = {
   buildings: [],
-  point_ids: [],
   point_topics: [],
   point_types: [],
   equipment_types: [],
@@ -32,11 +27,13 @@ export interface MySecureJsonData {
   apiKey?: string;
 }
 
+type DataValue = string | number | null;
+
 export interface PointData {
   point_id: number;
   topic: string;
   columns: string[];
   unit: string;
-  values: NameOrId[][];
+  values: DataValue[][];
   display?: string;
 }
