@@ -8,7 +8,7 @@ import {
   FieldType,
 } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
-
+import { fetchTimeseries } from './onboard-api';
 import { PointSelector, PointData, MyDataSourceOptions, defaultQuery } from './types';
 
 const REQUIRED_SCOPES = ['general', 'buildings:read'];
@@ -33,23 +33,15 @@ export class DataSource extends DataSourceApi<PointSelector, MyDataSourceOptions
     const queries = targets.map(async (target) => {
       const query = defaults(target, defaultQuery);
       // TODO: error handling :-(
-      const timeseries = await getBackendSrv().datasourceRequest({
-        method: 'POST',
-        data: {
-          start: from,
-          end: to,
-          point_ids: [294156, 294157, 294177, 294183, 294186],
-        },
-        url: `${this.url}/portal/timeseries`,
-      });
+      const timeseries = await fetchTimeseries(query, from, to, this.url);
       const df = new MutableDataFrame({
         refId: query.refId,
         fields: [{ name: 'time', type: FieldType.time }],
       });
-      timeseries.data.forEach(({ point_id, columns, unit, values, topic }: PointData) => {
+      timeseries.data.forEach(({ point_id, columns, unit, values, display }: PointData) => {
         const timeCol = columns.indexOf('time');
         const unitCol = columns.indexOf(unit);
-        const displayName = topic || `${point_id}`;
+        const displayName = display || `${point_id}`;
         df.addField({
           name: `${point_id}`,
           type: FieldType.number,

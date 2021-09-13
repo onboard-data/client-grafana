@@ -21,11 +21,6 @@ export const QueryEditor = (props: Props) => {
     props.onChange({ ...query, [key]: e });
   const grafanaUrl = props.datasource.url;
 
-  console.log(`query = ${JSON.stringify(props.query)}`);
-
-  // TODO: run button?
-  // const { onRunQuery } = props; onRunQuery();
-
   return (
     <div className="gf-form">
       <VerticalGroup>
