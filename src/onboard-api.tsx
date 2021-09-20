@@ -52,8 +52,7 @@ export const fetchPointTypes = async (grafanaUrl: GrafanaUrl) => {
   return pointTypes;
 };
 
-const values = (values: Array<SelectableValue<number>>) =>
-  values.map(({ value }) => value);
+const values = (values: Array<SelectableValue<number>>) => values.map(({ value }) => value);
 
 export const fetchTimeseries = async (
   query: PointSelector,
@@ -70,8 +69,8 @@ export const fetchTimeseries = async (
         buildings: values(query.buildings),
         point_types: values(query.point_types),
         equipment_types: values(query.equipment_types),
-        point_topics: query.point_topics,
-      }
+        point_topics: query.point_topics.filter((t) => t != null && t.length > 0),
+      },
     },
     url: `${grafanaUrl}/portal/timeseries`,
   });

@@ -1,12 +1,11 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent } from 'react';
-import { LegacyForms, VerticalGroup } from '@grafana/ui';
+import { Field, VerticalGroup, TextArea } from '@grafana/ui';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { DataSource } from './datasource';
 import { defaultQuery, MyDataSourceOptions, PointSelector } from './types';
 import { BuildingSelector, PointTypeSelector, EquipmentTypeSelector } from './Selectors';
-const { FormField } = LegacyForms;
 
 type Props = QueryEditorProps<DataSource, PointSelector, MyDataSourceOptions>;
 
@@ -17,7 +16,7 @@ export const QueryEditor = (props: Props) => {
   // @ts-ignore
   const query = defaults(props.query, defaultQuery);
   const { buildings, point_types, equipment_types, point_topics } = query;
-  const setKeyValue = (key: string) => (e: Array<SelectableValue>) =>
+  const setKeyValue = (key: string) => (e: SelectableValue[]) =>
     props.onChange({ ...query, [key]: e });
   const grafanaUrl = props.datasource.url;
 
@@ -39,14 +38,21 @@ export const QueryEditor = (props: Props) => {
           value={point_types}
           onChange={setKeyValue('point_types')}
         />
-        <FormField
-          label="Point Topics"
-          placeholder="(all matched points)"
-          value={point_topics.join('\n')}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            props.onChange({ ...query, point_topics: e.target.value.split('\n') })
-          }
-        />
+        <Field label="Point Topics, one per line">
+          <TextArea
+            placeholder="(all matched points)"
+            cols={80}
+            rows={10}
+            css=""
+            value={point_topics.join('\n')}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              props.onChange({
+                ...query,
+                point_topics: e.target.value.split('\n').map((t) => t.trim()),
+              })
+            }
+          />
+        </Field>
       </VerticalGroup>
     </div>
   );
