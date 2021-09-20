@@ -4,6 +4,8 @@
 
 `yarn watch` while you're working, `yarn build` to run all checks ahead of commit
 
+Grafana has a storybook with docs for their UI components [here](https://developers.grafana.com/ui/latest/index.html?path=/docs/forms-textarea--basic)
+
 ## signing a distribution
 
 https://grafana.com/docs/grafana/latest/developers/plugins/sign-a-plugin/#sign-a-private-plugin
