@@ -43,9 +43,18 @@ export class DataSource extends DataSourceApi<PointSelector, MyDataSourceOptions
         const timeCol = columns.indexOf('time');
         const unitCol = columns.indexOf(unit);
         const displayName = display || `${point_id}`;
+        const [b, e, pt] = (display ?? '').split(' - ');
+        const labels = pt
+          ? {
+              building: b,
+              equip: e,
+              type: pt,
+            }
+          : undefined;
         df.addField({
           name: `${point_id}`,
           type: FieldType.number,
+          labels,
           config: {
             unit,
             displayName,
