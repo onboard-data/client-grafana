@@ -12,8 +12,8 @@
     },
     "keywords": ["bacnet", "modbus", "bas"],
     "logos": {
-      "small": "img/logo.svg",
-      "large": "img/logo.svg"
+      "small": "img/onboard-logo.png",
+      "large": "img/onboard-logo.png"
     },
     "links": [
       {

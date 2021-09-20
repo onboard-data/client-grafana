@@ -1,31 +1,29 @@
-# Grafana Data Source Plugin Template
+# Onboard Portal Grafana Datasource
 
-[![Build](https://github.com/grafana/grafana-starter-datasource/workflows/CI/badge.svg)](https://github.com/grafana/grafana-starter-datasource/actions?query=workflow%3A%22CI%22)
+This package provides a Grafana Datasource for Onboard Data's [building data API](https://portal.onboarddata.io).
+For more details, you can navigate to the API & Docs Page to read the Getting Started Documentation section in the portal.
+You'll have access to this page once you've signed up for our sandbox or you've been given access to your organization's account.
 
-This template is a starting point for building Grafana Data Source Plugins
+## API Access
 
-## What is Grafana Data Source Plugin?
+You'll need an API key in order to use this datasource. If you don't have one and would like to start prototyping against an example building please [request a key here](https://onboarddata.io/api-keys). Your key will need to have scopes `general` and `buildings:read` and be using API version `2020-09-15` or greater.
 
-Grafana supports a wide range of data sources, including Prometheus, MySQL, and even Datadog. There’s a good chance you can already visualize metrics from the systems you have set up. In some cases, though, you already have an in-house metrics solution that you’d like to add to your Grafana dashboards. Grafana Data Source Plugins enables integrating such solutions with Grafana.
+We currently only support installing this plugin on local Grafana instances, details of that procedure can be [found here](https://grafana.com/docs/grafana/latest/plugins/installation/).
 
-## Getting started
+Once installed, the only configuration required is to create a new datasource inside Grafana and provide it with your Onboard API key. The 'Save & Test' button will validate the key with our servers. You'll then be able to select and add building data to dashboards, like you would with any other Grafana datasource.
 
-```bash
-yarn install
-yarn dev # Build plugin in development mode or run in watch mode
-# or
-yarn watch
+## License
 
-# and run grafana in a docker container
-docker run -d -p 3001:3000 -v "$(pwd)":/var/lib/grafana/plugins --name=grafana grafana/grafana:7.0.0
+ Copyright 2018-2021 Onboard Data Inc
 
-# web UI will start on port 3001
-# credentials for first login are admin/admin
-```
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-## Learn more
+     http://www.apache.org/licenses/LICENSE-2.0
 
-- [Build a data source plugin tutorial](https://grafana.com/tutorials/build-a-data-source-plugin)
-- [Grafana documentation](https://grafana.com/docs/)
-- [Grafana Tutorials](https://grafana.com/tutorials/) - Grafana Tutorials are step-by-step guides that help you make the most of Grafana
-- [Grafana UI Library](https://developers.grafana.com/ui) - UI components to help you build interfaces using Grafana Design System
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.

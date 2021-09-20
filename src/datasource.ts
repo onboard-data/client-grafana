@@ -33,7 +33,6 @@ export class DataSource extends DataSourceApi<PointSelector, MyDataSourceOptions
     const to = range!.to.valueOf();
     const queries = targets.map(async (target) => {
       const query = defaults(target, defaultQuery);
-      // TODO: error handling :-(
       const timeseries = await fetchTimeseries(query, from, to, this.url);
       const df = new MutableDataFrame({
         refId: query.refId,
