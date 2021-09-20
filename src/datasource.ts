@@ -12,6 +12,7 @@ import { fetchTimeseries } from './onboard-api';
 import { PointSelector, PointData, MyDataSourceOptions, defaultQuery } from './types';
 
 const REQUIRED_SCOPES = ['general', 'buildings:read'];
+const REQUIRED_VERSION = '2021-09-15';
 
 const missingScopes = (missing: string[]) => ({
   status: 'error',
@@ -94,6 +95,13 @@ export class DataSource extends DataSourceApi<PointSelector, MyDataSourceOptions
     const missing = REQUIRED_SCOPES.filter((s) => scopes.indexOf(s) === -1);
     if (missing.length > 0) {
       return missingScopes(missing);
+    }
+    const version = whoami.data?.apiVersion ?? '';
+    if (version && version < REQUIRED_VERSION) {
+      return {
+        status: 'error',
+        message: `Provided API Key must be using version ${REQUIRED_VERSION} or higher`,
+      };
     }
     return {
       status: 'success',
