@@ -27,6 +27,9 @@ function Selector<T>(props: InternalSelectorProps<T>) {
       defaultOptions
       cacheOptions
       loadOptions={props.onLoadOptions}
+      filterOption={(o: SelectableValue<T>, query: string) =>
+        o.label?.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      }
     />
   );
 }
