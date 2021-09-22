@@ -3,17 +3,16 @@
   "type": "datasource",
   "name": "Onboard Data",
   "id": "onboarddata-portal-datasource",
-  "metrics": true,
   "info": {
-    "description": "",
+    "description": "Data source provider for OnboardData's building data portal",
     "author": {
       "name": "Onboard Data",
       "url": "https://onboarddata.io"
     },
     "keywords": ["bacnet", "modbus", "bas"],
     "logos": {
-      "small": "img/onboard-logo.png",
-      "large": "img/onboard-logo.png"
+      "small": "img/onboard-logo.svg",
+      "large": "img/onboard-logo.svg"
     },
     "links": [
       {
