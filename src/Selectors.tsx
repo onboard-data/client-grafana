@@ -26,6 +26,7 @@ function Selector<T>(props: InternalSelectorProps<T>) {
       tabSelectsValue
       defaultOptions
       cacheOptions
+      menuShouldPortal
       loadOptions={props.onLoadOptions}
       filterOption={(o: SelectableValue<T>, query: string) =>
         o.label?.toLowerCase().indexOf(query.toLowerCase()) !== -1

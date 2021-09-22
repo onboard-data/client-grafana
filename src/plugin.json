@@ -3,6 +3,7 @@
   "type": "datasource",
   "name": "Onboard Data",
   "id": "onboarddata-portal-datasource",
+  "metrics": true,
   "info": {
     "description": "Data source provider for OnboardData's building data portal",
     "author": {
