@@ -3,6 +3,7 @@ import { DataQuery, DataSourceJsonData, SelectableValue } from '@grafana/data';
 export interface PointSelector extends DataQuery {
   buildings: Array<SelectableValue<number>>;
   point_types: Array<SelectableValue<number>>;
+  equipment: string[];
   equipment_types: Array<SelectableValue<number>>;
   point_topics: string[];
 }
@@ -12,6 +13,7 @@ export const defaultQuery: Partial<PointSelector> = {
   point_topics: [],
   point_types: [],
   equipment_types: [],
+  equipment: [],
 };
 
 /**

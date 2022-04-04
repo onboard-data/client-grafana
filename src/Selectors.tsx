@@ -1,12 +1,22 @@
 import React from 'react';
 import { AsyncMultiSelect } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
-import { fetchBuildings, fetchEquipmentTypes, fetchPointTypes } from './onboard-api';
+import {
+  fetchBuildings,
+  fetchBuildingEquipment,
+  fetchEquipmentTypes,
+  fetchPointTypes,
+  Equipment,
+} from './onboard-api';
 
 interface SelectorProps<T> {
   value: Array<SelectableValue<T>>;
   onChange: (vals: Array<SelectableValue<T>>) => any;
   grafanaUrl?: string;
+}
+
+interface EquipmentSelectorProps<T> extends SelectorProps<T> {
+  buildings: Array<SelectableValue<number>>;
 }
 
 interface InternalSelectorProps<T> extends SelectorProps<T> {
@@ -42,6 +52,25 @@ export const BuildingSelector = (props: SelectorProps<number>) => (
     onLoadOptions={() =>
       fetchBuildings(props.grafanaUrl).then((buildings) =>
         buildings.map((b) => ({ value: b.id, label: b.name }))
+      )
+    }
+    {...props}
+  />
+);
+
+const equipDisplayName = (equip: Equipment) => {
+  const { equip_id, suffix, type_name } = equip;
+  if (!suffix) return `${equip_id} (${type_name})`;
+  return `${equip_id} (${type_name}-${suffix})`;
+};
+
+export const EquipmentSelector = (props: EquipmentSelectorProps<number>) => (
+  <Selector
+    prefix="Equipment"
+    placeholder="(all equipment)"
+    onLoadOptions={() =>
+      fetchBuildingEquipment(props.buildings, props.grafanaUrl).then((equips) =>
+        equips.map((e) => ({ value: e.id, label: equipDisplayName(e) }))
       )
     }
     {...props}

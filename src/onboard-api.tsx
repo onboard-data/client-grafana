@@ -52,6 +52,35 @@ export const fetchPointTypes = async (grafanaUrl: GrafanaUrl) => {
   return pointTypes;
 };
 
+export interface Equipment {
+  id: number;
+  equip_id: string;
+  suffix: string | undefined;
+  type_name: string;
+}
+
+export const fetchBuildingEquipment = async (
+  buildings: Array<SelectableValue<number>>,
+  grafanaUrl: GrafanaUrl
+) => {
+  const responses = await Promise.all(
+    values(buildings).map((buildingId) =>
+      getBackendSrv()
+        .datasourceRequest({
+          method: 'GET',
+          url: `${grafanaUrl}/portal/buildings/${buildingId}/equipment`,
+        })
+        .then((res) => {
+          const equips: Equipment[] = res.data;
+          return equips;
+        })
+    )
+  );
+  const allEquips: Equipment[] = responses.flat();
+  allEquips.sort(compareKey('equip_id'));
+  return allEquips;
+};
+
 const values = (values: Array<SelectableValue<number>>) => values.map(({ value }) => value);
 
 export const fetchTimeseries = async (
@@ -60,17 +89,27 @@ export const fetchTimeseries = async (
   to: number,
   grafanaUrl: GrafanaUrl
 ) => {
+  const nonEmpty = (s: string | undefined) => s != null && s.length > 0;
+  const selector = {
+    buildings: values(query.buildings),
+    point_types: values(query.point_types),
+    equipment_types: values(query.equipment_types),
+    equipment: query.equipment.filter(nonEmpty),
+    point_topics: query.point_topics.filter(nonEmpty),
+  };
+  const numSelections = Object.values(selector)
+    .map((f) => f.length)
+    .reduce((a, b) => a + b, 0);
+  // don't let a user query all data for all buildings when making a new panel
+  if (numSelections === 0) {
+    return Promise.resolve({ data: [] });
+  }
   const timeseries = await getBackendSrv().datasourceRequest({
     method: 'POST',
     data: {
       start: from,
       end: to,
-      selector: {
-        buildings: values(query.buildings),
-        point_types: values(query.point_types),
-        equipment_types: values(query.equipment_types),
-        point_topics: query.point_topics.filter((t) => t != null && t.length > 0),
-      },
+      selector,
     },
     url: `${grafanaUrl}/portal/timeseries`,
   });

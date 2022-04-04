@@ -15,7 +15,7 @@ type Props = QueryEditorProps<DataSource, PointSelector, MyDataSourceOptions>;
 export const QueryEditor = (props: Props) => {
   // @ts-ignore
   const query = defaults(props.query, defaultQuery);
-  const { buildings, point_types, equipment_types, point_topics } = query;
+  const { buildings, equipment, point_types, equipment_types, point_topics } = query;
   const setKeyValue = (key: string) => (e: SelectableValue[]) =>
     props.onChange({ ...query, [key]: e });
   const grafanaUrl = props.datasource.url;
@@ -38,6 +38,21 @@ export const QueryEditor = (props: Props) => {
           value={point_types}
           onChange={setKeyValue('point_types')}
         />
+        <Field label="Equipment Ids, one per line">
+          <TextArea
+            placeholder="(all matched equipment)"
+            cols={80}
+            rows={5}
+            css=""
+            value={equipment.join('\n')}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              props.onChange({
+                ...query,
+                equipment: e.target.value.split('\n').map((t) => t.trim()),
+              })
+            }
+          />
+        </Field>
         <Field label="Point Topics, one per line">
           <TextArea
             placeholder="(all matched points)"
