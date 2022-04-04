@@ -7,9 +7,12 @@
 from this repo's root:
 
 ```bash
-docker run -d -p 3001:3000 -v "$(pwd)":/var/lib/grafana/plugins --name=grafana8 grafana/grafana:8.1.4
-docker run -d -p 3002:3000 -v "$(pwd)":/var/lib/grafana/plugins --name=grafana7 grafana/grafana:7.0.0
+docker run -d -p 3001:3000 -v "$(pwd)":/var/lib/grafana/plugins --env GF_DEFAULT_APP_MODE=development --name=grafana8 grafana/grafana:8.4.5
+
+docker run -d -p 3002:3000 -v "$(pwd)":/var/lib/grafana/plugins --env GF_DEFAULT_APP_MODE=development --name=grafana7 grafana/grafana:7.0.0
 ```
+
+This will start 8.x on port 3001 and 7.x on 3002. The initial creds are `admin` / `admin`.
 
 ### plugin dev
 
