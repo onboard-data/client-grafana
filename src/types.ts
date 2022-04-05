@@ -6,6 +6,8 @@ export interface PointSelector extends DataQuery {
   equipment: string[];
   equipment_types: Array<SelectableValue<number>>;
   point_topics: string[];
+  equip_location: Array<SelectableValue<string>>;
+  equip_served: Array<SelectableValue<string>>;
 }
 
 export const defaultQuery: Partial<PointSelector> = {
@@ -14,6 +16,8 @@ export const defaultQuery: Partial<PointSelector> = {
   point_types: [],
   equipment_types: [],
   equipment: [],
+  equip_location: [],
+  equip_served: [],
 };
 
 /**

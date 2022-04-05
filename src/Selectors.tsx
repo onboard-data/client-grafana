@@ -1,5 +1,5 @@
-import React from 'react';
-import { AsyncMultiSelect } from '@grafana/ui';
+import React, { useState } from 'react';
+import { AsyncMultiSelect, MultiSelect } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import {
   fetchBuildings,
@@ -44,6 +44,54 @@ function Selector<T>(props: InternalSelectorProps<T>) {
     />
   );
 }
+
+const FLOOR_OPTIONS = [
+  'Basement',
+  'Rooftop',
+  'Outside',
+  'Whole Building',
+  'Ground Floor',
+  'Penthouse',
+].map((v) => ({ label: v, value: v }));
+
+interface FloorSelectorProps extends SelectorProps<string> {
+  prefix: string;
+  placeholder: string;
+}
+
+function append<T>(array: Array<T>, item: T) {
+  const copy = array.slice();
+  copy.push(item);
+  return copy;
+}
+
+/**
+ * A multi-selector that is pre-populated with our floor constants and allows users
+ * to enter custom values as well
+ */
+export const FloorSelector = (props: FloorSelectorProps) => {
+  const [customOptions, setCustomOptions] = useState<SelectableValue<string>[]>([]);
+  const options = customOptions.concat(FLOOR_OPTIONS);
+  return (
+    <MultiSelect
+      {...props}
+      options={options}
+      isClearable
+      isSearchable
+      tabSelectsValue
+      allowCustomValue
+      onCreateOption={(value: string) => {
+        const newOpt = { label: value, value };
+        setCustomOptions(append(customOptions, newOpt));
+        props.onChange(append(props.value, newOpt));
+      }}
+      menuShouldPortal
+      filterOption={(o: SelectableValue<string>, query: string) =>
+        o.label?.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      }
+    />
+  );
+};
 
 export const BuildingSelector = (props: SelectorProps<number>) => (
   <Selector

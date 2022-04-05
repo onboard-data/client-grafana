@@ -81,12 +81,14 @@ export const fetchBuildingEquipment = async (
   return allEquips;
 };
 
-const values = (values: Array<SelectableValue<number>>) => values.map(({ value }) => value);
+function values<T>(values: Array<SelectableValue<T>>) {
+  return values.map(({ value }) => value);
+}
 
 export const fetchTimeseries = async (
   query: PointSelector,
-  from: number,
-  to: number,
+  start: number,
+  end: number,
   grafanaUrl: GrafanaUrl
 ) => {
   const nonEmpty = (s: string | undefined) => s != null && s.length > 0;
@@ -96,9 +98,12 @@ export const fetchTimeseries = async (
     equipment_types: values(query.equipment_types),
     equipment: query.equipment.filter(nonEmpty),
     point_topics: query.point_topics.filter(nonEmpty),
+    equip_location: values(query.equip_location),
+    equip_served: values(query.equip_served),
   };
-  const numSelections = Object.values(selector)
-    .map((f) => f.length)
+  const numSelections = Object.entries(selector)
+    .filter(([k]) => k !== 'buildings')
+    .map(([_k, v]) => v.length)
     .reduce((a, b) => a + b, 0);
   // don't let a user query all data for all buildings when making a new panel
   if (numSelections === 0) {
@@ -107,8 +112,8 @@ export const fetchTimeseries = async (
   const timeseries = await getBackendSrv().datasourceRequest({
     method: 'POST',
     data: {
-      start: from,
-      end: to,
+      start,
+      end,
       selector,
     },
     url: `${grafanaUrl}/portal/timeseries`,

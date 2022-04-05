@@ -5,7 +5,12 @@ import { Field, VerticalGroup, TextArea } from '@grafana/ui';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { DataSource } from './datasource';
 import { defaultQuery, MyDataSourceOptions, PointSelector } from './types';
-import { BuildingSelector, PointTypeSelector, EquipmentTypeSelector } from './Selectors';
+import {
+  BuildingSelector,
+  PointTypeSelector,
+  EquipmentTypeSelector,
+  FloorSelector,
+} from './Selectors';
 
 type Props = QueryEditorProps<DataSource, PointSelector, MyDataSourceOptions>;
 
@@ -15,7 +20,15 @@ type Props = QueryEditorProps<DataSource, PointSelector, MyDataSourceOptions>;
 export const QueryEditor = (props: Props) => {
   // @ts-ignore
   const query = defaults(props.query, defaultQuery);
-  const { buildings, equipment, point_types, equipment_types, point_topics } = query;
+  const {
+    buildings,
+    equipment,
+    point_types,
+    equipment_types,
+    point_topics,
+    equip_location,
+    equip_served,
+  } = query;
   const setKeyValue = (key: string) => (e: SelectableValue[]) =>
     props.onChange({ ...query, [key]: e });
   const grafanaUrl = props.datasource.url;
@@ -37,6 +50,18 @@ export const QueryEditor = (props: Props) => {
           grafanaUrl={grafanaUrl}
           value={point_types}
           onChange={setKeyValue('point_types')}
+        />
+        <FloorSelector
+          prefix="Equipment Location"
+          placeholder="(all matched physical locations)"
+          value={equip_location}
+          onChange={setKeyValue('equip_location')}
+        />
+        <FloorSelector
+          prefix="Equipment Area Served"
+          placeholder="(all matched served areas)"
+          value={equip_served}
+          onChange={setKeyValue('equip_served')}
         />
         <Field label="Equipment Ids, one per line">
           <TextArea
