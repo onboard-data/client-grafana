@@ -22,6 +22,10 @@ Grafana has a storybook with docs for their UI components [here](https://develop
 
 If these steps worked then you should be able to see an unsigned version of our plugin at both ports: http://localhost:3001/plugins/onboarddata-portal-datasource/
 
+## new release
+
+Add a version to CHANGELOG file and make a new signed zipfile
+
 ## signing a distribution
 
 https://grafana.com/docs/grafana/latest/developers/plugins/sign-a-plugin/#sign-a-private-plugin
@@ -31,4 +35,5 @@ important part:
 ```bash
   export GRAFANA_API_KEY=<YOUR_API_KEY>  # leading spaces to keep they key out of your shell history
 npx @grafana/toolkit plugin:sign --rootUrls http://localhost:3000
+zip -r onboard-grafana-1.1.0.zip dist/
 ```
