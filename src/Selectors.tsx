@@ -59,7 +59,7 @@ interface FloorSelectorProps extends SelectorProps<string> {
   placeholder: string;
 }
 
-function append<T>(array: Array<T>, item: T) {
+function append<T>(array: T[], item: T) {
   const copy = array.slice();
   copy.push(item);
   return copy;
@@ -70,7 +70,7 @@ function append<T>(array: Array<T>, item: T) {
  * to enter custom values as well
  */
 export const FloorSelector = (props: FloorSelectorProps) => {
-  const [customOptions, setCustomOptions] = useState<SelectableValue<string>[]>([]);
+  const [customOptions, setCustomOptions] = useState<Array<SelectableValue<string>>>([]);
   const options = customOptions.concat(FLOOR_OPTIONS);
   return (
     <MultiSelect
@@ -108,7 +108,9 @@ export const BuildingSelector = (props: SelectorProps<number>) => (
 
 const equipDisplayName = (equip: Equipment) => {
   const { equip_id, suffix, type_name } = equip;
-  if (!suffix) return `${equip_id} (${type_name})`;
+  if (!suffix) {
+    return `${equip_id} (${type_name})`;
+  }
   return `${equip_id} (${type_name}-${suffix})`;
 };
 
